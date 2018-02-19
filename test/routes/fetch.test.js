@@ -1,4 +1,4 @@
-const fetchNotes = require('../../src/routes/fetch');
+const { fetchNotes } = require('../../src/routes/fetch');
 
 describe('The fetch route should return a JSON object which has', () => {
   let notes = null;
