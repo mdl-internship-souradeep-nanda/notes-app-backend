@@ -1,6 +1,7 @@
-const upsert = note => Promise.resolve({
-  result: 'OK',
-});
+const models = require('../../models');
+
+const upsert = note => models.notes.upsert(note)
+  .then(hasUpdated => hasUpdated);
 
 module.exports.upsert = upsert;
 
@@ -10,9 +11,18 @@ module.exports.route = {
   handler: (req, res) => {
     const { payload } = req;
     console.log(payload);
-    upsert(payload)
-      .then((msg) => {
-        res(msg);
-      });
+    payload.note_id = payload.id;
+    models.notes.findOne({
+      where: {
+        note_id: payload.note_id,
+      },
+    }).then((note) => {
+      if (note !== null) { payload.id = note.id; }
+      console.log(payload);
+      upsert(payload)
+        .then((msg) => {
+          res(msg);
+        });
+    });
   },
 };
