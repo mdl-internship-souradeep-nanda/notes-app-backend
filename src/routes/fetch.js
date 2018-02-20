@@ -1,6 +1,10 @@
 const models = require('../../models/');
 
-const fetchNotes = () => models.notes.findAll();
+const fetchNotes = () => models.notes.findAll({
+  order: [
+    ['note_id', 'ASC'],
+  ],
+});
 
 module.exports.fetchNotes = fetchNotes;
 
