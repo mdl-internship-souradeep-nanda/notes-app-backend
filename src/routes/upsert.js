@@ -1,7 +1,7 @@
 const models = require('../../models');
 
 const upsert = note => models.notes.upsert(note)
-  .then(hasUpdated => hasUpdated);
+  .then(isCreated => isCreated);
 
 module.exports.upsert = upsert;
 

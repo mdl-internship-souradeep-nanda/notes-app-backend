@@ -12,15 +12,23 @@ describe('The upsert handler should', () => {
     note_id: 0,
   };
   it('Add an entry if a note with that id does not exist', (done) => {
-    upsert(note).then((hasUpdated) => {
-      expect(hasUpdated).toBeFalsy();
+    upsert(note).then((isCreated) => {
+      expect(isCreated).toBeTruthy();
       done();
     });
   });
   it('Update an entry if a note with that id does exist', (done) => {
-    upsert(note).then((hasUpdated) => {
-      expect(hasUpdated).toBeTruthy();
-      done();
+    model.notes.findAll().then((notes) => {
+      // console.log(notes[0].id);
+      const {
+        id, note_id, title, body, // ignore eslint
+      } = notes[0];
+      upsert({
+        id, note_id, title, body,
+      }).then((hasUpdated) => {
+        expect(hasUpdated).toBeFalsy();
+        done();
+      });
     });
   });
 });
