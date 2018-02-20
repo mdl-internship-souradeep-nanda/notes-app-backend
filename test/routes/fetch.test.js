@@ -1,24 +1,32 @@
 const { fetchNotes } = require('../../src/routes/fetch');
+const model = require('../../models');
 
 describe('The fetch route should return a JSON object which has', () => {
-  let notes = null;
+  let note = null;
   beforeAll((done) => {
-    fetchNotes().then((fetchedNotes) => {
-      notes = fetchedNotes;
-      done();
-    });
-  });
-  it('a length property', () => {
-    expect(notes.length).toBeDefined();
+    model.notes.upsert({
+      note_id: 0,
+      title: 'title0',
+      body: 'body0',
+    })
+      .then(() => {
+        fetchNotes().then((fetchedNotes) => {
+          [note] = fetchedNotes;
+          done();
+        });
+      });
   });
   it('objects containing id', () => {
-    expect(notes[0].id).toBeDefined();
+    expect(note.id).toBeDefined();
+  });
+  it('objects containing note_id', () => {
+    expect(note.note_id).toBeDefined();
   });
   it('objects containing title', () => {
-    expect(notes[0].title).toBeDefined();
+    expect(note.title).toBeDefined();
   });
   it('objects containing body', () => {
-    expect(notes[0].body).toBeDefined();
+    expect(note.body).toBeDefined();
   });
 });
 

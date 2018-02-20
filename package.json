@@ -6,7 +6,7 @@
   "scripts": {
     "createDb": "NODE_ENV=test sequelize db:create && NODE_ENV=dev sequelize db:create",
     "start": "sequelize db:migrate && node src/index.js",
-    "test": "NODE_ENV=test sequelize db:migrate && jest"
+    "test": "NODE_ENV=test sequelize db:migrate && jest --runInBand --forceExit"
   },
   "author": "",
   "license": "ISC",
