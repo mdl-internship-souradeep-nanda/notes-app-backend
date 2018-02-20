@@ -1,16 +1,6 @@
-const fetchNotes = () => Promise.resolve({
-  length: 2,
-  0: {
-    id: 0,
-    title: 'Title0',
-    body: 'Body0',
-  },
-  1: {
-    id: 1,
-    title: 'Title1',
-    body: 'Body1',
-  },
-});
+const models = require('../../models/');
+
+const fetchNotes = () => models.notes.findAll();
 
 module.exports.fetchNotes = fetchNotes;
 
